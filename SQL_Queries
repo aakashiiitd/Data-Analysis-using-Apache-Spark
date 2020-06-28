@@ -1,0 +1,17 @@
+1.SELECT COUNT(log_level) FROM ghtorrent;
+2.SELECT COUNT(*) FROM ghtorrent WHERE log_level='WARN';
+3.SELECT COUNT(DISTINCT(repo)) FROM ghtorrent WHERE repo <>'' AND information LIKE '%URL%repos%/%?%' AND ret_stage='api_client.rb';
+4.SELECT downloader_id,COUNT(*) FROM ghtorrent WHERE information LIKE '%URL: https%' GROUP BY downloader_id ORDER BY COUNT(*) DESC LIMIT 10;
+5.SELECT downloader_id,COUNT(*) FROM ghtorrent WHERE information LIKE '%Failed%URL: https%' GROUP BY downloader_id ORDER BY COUNT(*) DESC LIMIT 10;
+6.SELECT hour,COUNT(*) FROM ghtorrent GROUP BY hour ORDER BY COUNT(*) DESC LIMIT 1;
+7.SELECT repo,COUNT(*) FROM ghtorrent WHERE repo<>'' GROUP BY repo ORDER BY COUNT(*) DESC LIMIT 1;
+8.SELECT access_key,COUNT(*) FROM ghtorrent WHERE access_key<>'' AND information LIKE '%Failed%' GROUP BY access_key ORDER BY COUNT(*) DESC LIMIT 1;
+9. CREATE INDEX idx on ghtorrent(downloader_id);
+SELECT COUNT(DISTINCT(repo)) FROM ghtorrent WHERE downloader_id='ghtorrent-22';\
+EXPLAIN ANALYSE SELECT COUNT(DISTINCT(repo)) FROM ghtorrent WHERE downloader_id='ghtorrent-22';
+10. DROP INDEX idx;
+SELECT COUNT(DISTINCT(repo)) FROM ghtorrent WHERE downloader_id='ghtorrent-22';
+EXPLAIN ANALYSE SELECT COUNT(DISTINCT(repo)) FROM ghtorrent WHERE downloader_id='ghtorrent-22';
+11.SELECT COUNT(*) FROM interesting;
+12.SELECT COUNT(*) FROM ghtorrent JOIN interesting ON repo=url;
+13.SELECT repo,COUNT(*) FROM ghtorrent JOIN interesting ON repo=url WHERE information LIKE '%Failed%' GROUP BY repo ORDER BY COUNT(*) DESC LIMIT 5;
